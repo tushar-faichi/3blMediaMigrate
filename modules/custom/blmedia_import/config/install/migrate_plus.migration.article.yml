@@ -1,0 +1,61 @@
+id: 3bl_ep_article   
+label: Articles from ethical performance.
+migration_group: 3bl_ep
+source:
+  plugin: 3bl_ep_article_read
+  target: db_migration
+destination:
+  plugin: entity:node
+process:
+  type:
+    plugin: default_value
+    default_value: ep_article
+  title: title
+  uid:
+    plugin: default_value
+    default_value: 1
+  sticky:
+    plugin: default_value
+    default_value: 0
+  'body/value': content
+  'body/format':
+    plugin: default_value
+    default_value: full_html
+  'field_links/uri': link1
+  'field_links/title': link1
+  field_issue_date: issueDate
+  field_email:
+    plugin: explode
+    delimiter: '|'
+    source: email
+    limit: 10
+    no_stub: true  
+  'field_images/target_id':
+    plugin: migration_lookup
+    migration: 3bl_article_file
+    source: image
+    no_stub: true
+  field_magazine:
+    plugin: migration_lookup
+    migration: 3bl_ep_magazine_term
+    source: magazine
+  field_type:
+    plugin: migration_lookup
+    migration: 3bl_ep_type_term
+    source: type
+  field_keywords:
+    -
+      plugin: explode
+      delimiter: '|'
+      source: keyword
+      limit: 10
+      no_stub: true
+    - 
+      plugin: migration_lookup
+      migration: 3bl_ep_keywords_term          
+migration_dependencies:
+  required:
+    - 3bl_ep_magazine_term
+    - 3bl_article_file
+    - 3bl_ep_type_term
+    - 3bl_ep_keywords_term

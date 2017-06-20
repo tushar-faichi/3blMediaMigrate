@@ -1,0 +1,19 @@
+id: 3bl_article_file
+label: Files
+migration_group: 3bl_ep
+source:
+  plugin: blmedia_import_file
+  target: db_migration
+process:
+  filename: image
+  status: 1  
+  uri: 
+    plugin: file_copy
+    source:
+      - file_source
+      - file_destination
+  uid: 
+    plugin: default_value
+    default_value: 1
+destination:
+  plugin: entity:file

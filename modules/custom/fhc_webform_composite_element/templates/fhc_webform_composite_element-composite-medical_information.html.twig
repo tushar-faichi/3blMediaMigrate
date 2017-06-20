@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Default theme implementation of an address composite webform element.
+ *
+ * Available variables:
+ * - content: The address webform element to be output.
+ * - flexbox: Determines if Flexbox layout should be applied to the composite
+ *   element.
+ *
+ * @see template_preprocess_webform_address()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('webform/webform.element.composite') }}
+{% if flexbox %}
+
+  {% if content.medication %}
+    <div class="webform-flexbox">
+      <div class="webform-flex webform-flex--1"><div class="webform-flex--container">{{ content.medication }}</div></div>
+    </div>
+  {% endif %}
+
+  {% if content.dosage %}
+    <div class="webform-flexbox">
+      <div class="webform-flex webform-flex--1"><div class="webform-flex--container">{{ content.dosage }}</div></div>
+    </div>
+  {% endif %}
+
+  <div class="webform-flexbox">
+    {% if content.route %}
+      <div class="webform-flex webform-flex--1"><div class="webform-flex--container">{{ content.route }}</div></div>
+    {% endif %}
+    {% if content.frequency %}
+      <div class="webform-flex webform-flex--1"><div class="webform-flex--container">{{ content.frequency }}</div></div>
+    {% endif %}
+  </div>
+
+{% else %}
+  {{ content }}
+{% endif %}

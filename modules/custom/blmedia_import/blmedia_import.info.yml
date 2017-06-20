@@ -1,0 +1,7 @@
+name: blmedia_import
+type: module
+description: This is migration of content from custom D8 of EP, by extending d8 core migration.
+core: 8.x
+package: 3Bl Media Migrate
+dependencies:
+  - migrate_tools

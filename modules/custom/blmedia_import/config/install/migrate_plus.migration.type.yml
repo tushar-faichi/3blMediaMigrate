@@ -1,0 +1,13 @@
+id: 3bl_ep_type_term
+label: Taxonomy term Type for article.
+migration_group: 3bl_ep
+source:
+  plugin: blmedia_import_type
+  target: db_migration
+destination:
+  plugin: entity:taxonomy_term
+process:
+  vid:
+    plugin: default_value
+    default_value: ep_type
+  name: type

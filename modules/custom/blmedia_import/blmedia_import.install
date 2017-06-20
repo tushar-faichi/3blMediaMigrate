@@ -1,0 +1,17 @@
+<?php 
+
+/**
+ * Implement HOOK_uninstall().
+ * 
+ * Remove configuration on Module Uninstall.
+ */
+function blmedia_import_uninstall() {
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_type_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_keywords_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_keywordsecond_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_magazine_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_article_file')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_article')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_articlekeywords_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration_group.3bl_ep')->delete();	
+}

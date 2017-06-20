@@ -1,0 +1,43 @@
+<?php
+
+use Drupal\Component\Utility\Unicode;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+use Drupal\Core\Breadcrumb\Breadcrumb;
+use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
+use Drupal\file\FileInterface;
+use Drupal\webform\Entity\Webform;
+use Drupal\webform\Entity\WebformSubmission;
+use Drupal\webform\Element\WebformMessage;
+use Drupal\webform\Plugin\Field\FieldType\WebformEntityReferenceItem;
+use Drupal\webform\Plugin\WebformElement\ManagedFile;
+use Drupal\webform\Utility\WebformArrayHelper;
+use Drupal\webform\Utility\WebformThemeHelper;
+use Drupal\webform\WebformInterface;
+use Drupal\webform\WebformSubmissionForm;
+
+/**
+ * Implements hook_theme().
+ */
+function fhc_webform_composite_element_theme() {
+  $info = [
+    'fhc_webform_composite_element_composite_medical_information' => [
+      'render element' => 'element',
+    ],
+  ];
+
+  // Since any rendering of a webform is going to require 'webform.theme.inc'
+  // we are going to just add it to every template.
+  foreach ($info as &$template) {
+    $template['file'] = 'includes/fhc_webform_composite_element.theme.inc';
+  }
+
+  return $info;
+}

@@ -1,0 +1,7 @@
+id: 3bl_ep
+label: 3Bl Media EP migration
+description: 3BL media - Imports ethical performance content with extending D8 core migration.
+source_type: 3BL ethical performance DB.
+shared_configuration:
+  source:
+    key: db_migration

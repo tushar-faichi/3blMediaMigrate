@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains blmedia_import.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function blmedia_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the blmedia_import module.
+    case 'help.page.blmedia_import':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This is migration of content from custom D8 of EP, by extending d8 core migration.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

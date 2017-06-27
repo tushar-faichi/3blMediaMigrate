@@ -1,16 +1,16 @@
-id: 3bl_ep_magazine_term
-label: Taxonomy term Magazine for article.
+id: 3bl_ep_location_term
+label: Taxonomy term Location for article.
 migration_group: 3bl_ep
 source:
-  plugin: blmedia_import_magazine
+  plugin: blmedia_import_location
   target: db_migration
 destination:
   plugin: entity:taxonomy_term
 process:
   vid:
     plugin: default_value
-    default_value: ep_magazine
-  name: 
+    default_value: ep_location
+  name:
     plugin: skip_on_empty
     method: row
-    source: magazine
+    source: location_name

@@ -1,0 +1,16 @@
+id: 3bl_ep_category_term
+label: Category term for article.
+migration_group: 3bl_ep
+source:
+  plugin: blmedia_import_category
+  target: db_migration
+destination:
+  plugin: entity:taxonomy_term
+process:
+  vid:
+    plugin: default_value
+    default_value: ep_category
+  name: 
+      plugin: skip_on_empty
+      method: row
+      source: name

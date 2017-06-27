@@ -11,6 +11,8 @@ process:
     plugin: default_value
     default_value: ep_article
   title: title
+  created: created
+  changed: updated
   uid:
     plugin: default_value
     default_value: 1
@@ -39,6 +41,14 @@ process:
     plugin: migration_lookup
     migration: 3bl_ep_magazine_term
     source: magazine
+  field_category:
+    plugin: migration_lookup
+    migration: 3bl_ep_category_term
+    source: category
+  field_location:  
+    plugin: migration_lookup
+    migration: 3bl_ep_location_term
+    source: location    
   field_type:
     plugin: migration_lookup
     migration: 3bl_ep_type_term
@@ -59,3 +69,5 @@ migration_dependencies:
     - 3bl_article_file
     - 3bl_ep_type_term
     - 3bl_ep_keywords_term
+    - 3bl_ep_category_term
+    - 3bl_ep_location_term

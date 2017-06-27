@@ -10,4 +10,7 @@ process:
   vid:
     plugin: default_value
     default_value: ep_type
-  name: type
+  name:
+    plugin: skip_on_empty
+    method: row
+    source: type

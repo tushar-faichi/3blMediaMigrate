@@ -10,4 +10,7 @@ process:
   vid:
     plugin: default_value
     default_value: ep_keywords
-  name: keyword
+  name: 
+    plugin: skip_on_empty
+    method: row
+    source: keyword

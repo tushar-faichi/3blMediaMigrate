@@ -1,0 +1,18 @@
+id: 3bl_ep_associate_term
+label: Taxonomy term Associate for article.
+migration_group: 3bl_ep
+source:
+  plugin: blmedia_import_associate
+  target: db_migration
+destination:
+  plugin: entity:taxonomy_term
+process:
+  vid:
+    plugin: default_value
+    default_value: ep_associate
+  name:
+    plugin: explode
+    delimiter: '|'
+    source: associate
+    limit: 10
+    no_stub: true

@@ -1,0 +1,60 @@
+id: 3bl_ep_bestpractice 
+label: BestPractice from ethical performance.
+migration_group: 3bl_ep
+source:
+  plugin: 3bl_ep_bestpractice_read
+  target: db_migration
+destination:
+  plugin: entity:node
+process:
+  type:
+    plugin: default_value
+    default_value: best_practice
+  title: title
+  created: created
+  changed: updated
+  uid:
+    plugin: default_value
+    default_value: 1
+  sticky:
+    plugin: default_value
+    default_value: 0
+  'body/value': content
+  'body/format':
+    plugin: default_value
+    default_value: full_html    
+  'field_introduction/value': introduction
+  'field_introduction/format':
+    plugin: default_value
+    default_value: full_html
+  'field_comment_by_editor/value': comment
+  'field_comment_by_editor/format':
+    plugin: default_value
+    default_value: full_html  
+  field_issue_date: issueDate  
+  'field_images/target_id':
+    plugin: migration_lookup
+    migration: 3bl_article_file_bestpractice
+    source: image
+    no_stub: true
+  'field_pdf/target_id':
+    plugin: migration_lookup
+    migration: 3bl_article_file_pdf_bestpractice
+    source: pdf
+    no_stub: true  
+  field_magazine:
+    plugin: default_value
+    default_value: 4133
+  field_associate:  
+    - 
+      plugin: explode
+      delimiter: '|'
+      source: associate
+      limit: 10
+      no_stub: true
+    -
+      plugin: migration_lookup
+      migration: 3bl_ep_associate_term             
+migration_dependencies:
+  required:
+    - 3bl_article_file_bestpractice

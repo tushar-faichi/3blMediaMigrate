@@ -6,25 +6,26 @@ use Drupal\migrate\Plugin\migrate\source\SqlBase;
 use Drupal\migrate\Row;
 
 /**
- * Provides a 'BlmediaImportFiles' migrate source.
+ * Provides a 'BlmediaImportFilesPDFBestpractice' migrate source.
  *
  * @MigrateSource(
- *  id = "blmedia_import_file"
+ *  id = "blmedia_import_file_pdf_bestpractice"
  * )
  */
-class BlmediaImportFiles extends SqlBase {
+class BlmediaImportFilesPDFBestpractice extends SqlBase {
 
   /**
    * {@inheritdoc}
    */
   public function query() {
     
-    return $this->select('article', 'a')
-      ->fields('a', array('image'))
-      ->isNotNull('a.image')
-      ->distinct()
-      ->condition('a.image', ' ', '!=')
-      ->condition('a.image', 'NULL', '!=');
+     $query = $this->select('bestpractice', 'a')
+     ->fields('a', array('pdf'))
+     ->isNotNull('a.pdf')
+     ->distinct()
+     ->condition('a.pdf', ' ', '!=')
+     ->condition('a.pdf', 'NULL', '!=');
+      return $query;
   }
 
   /**
@@ -41,16 +42,15 @@ class BlmediaImportFiles extends SqlBase {
    * {@inheritdoc}
    */
   public function prepareRow(Row $row) {
-    
   	$local_path = '/home/faichi/Downloads/ep_articles_images/';
   	$destination_base_uri = 'public://';
-  	$filepath = $row->getSourceProperty('image');
-
+  	$filepath = $row->getSourceProperty('pdf');
+  	
   	$row->setSourceProperty('file_source', $local_path . $filepath);
   	$row->setSourceProperty('file_destination', $destination_base_uri . $filepath);
-
+  	
   	$file_name = basename($filepath);
-  	$row->setSourceProperty('image', $file_name);
+  	$row->setSourceProperty('pdf', $file_name);
   	return parent::prepareRow($row);
   }
 
@@ -59,7 +59,7 @@ class BlmediaImportFiles extends SqlBase {
    */
   public function getIds() {
     return array(
-      'image' => array(
+      'pdf' => array(
         'type' => 'string',
         'alias' => 'a',
       ),

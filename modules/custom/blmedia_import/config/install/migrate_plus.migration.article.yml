@@ -24,8 +24,7 @@ process:
     plugin: default_value
     default_value: full_html
   'field_links/uri': link1
-  'field_links/title': link1
-  field_issue_date: issueDate
+  'field_links/title': link1      
   field_email:
     plugin: explode
     delimiter: '|'
@@ -36,23 +35,11 @@ process:
     plugin: migration_lookup
     migration: 3bl_article_file
     source: image
-    no_stub: true
-  field_magazine:
-    plugin: migration_lookup
-    migration: 3bl_ep_magazine_term
-    source: magazine
+    no_stub: true  
   field_category:
     plugin: migration_lookup
     migration: 3bl_ep_category_term
     source: category
-  field_location:  
-    plugin: migration_lookup
-    migration: 3bl_ep_location_term
-    source: location    
-  field_type:
-    plugin: migration_lookup
-    migration: 3bl_ep_type_term
-    source: type
   field_keywords:
     -
       plugin: explode
@@ -62,12 +49,8 @@ process:
       no_stub: true
     - 
       plugin: migration_lookup
-      migration: 3bl_ep_keywords_term          
+      migration: 3bl_ep_keywords_term
 migration_dependencies:
   required:
-    - 3bl_ep_magazine_term
     - 3bl_article_file
-    - 3bl_ep_type_term
-    - 3bl_ep_keywords_term
     - 3bl_ep_category_term
-    - 3bl_ep_location_term

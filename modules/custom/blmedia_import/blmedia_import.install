@@ -13,5 +13,9 @@ function blmedia_import_uninstall() {
 	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_article_file')->delete();
 	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_article')->delete();
 	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_location_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_bestpractice')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_ep_associate_term')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_article_file_bestpractice')->delete();
+	\Drupal::configFactory()->getEditable('migrate_plus.migration.3bl_article_file_pdf_bestpractice')->delete();
 	\Drupal::configFactory()->getEditable('migrate_plus.migration_group.3bl_ep')->delete();	
 }

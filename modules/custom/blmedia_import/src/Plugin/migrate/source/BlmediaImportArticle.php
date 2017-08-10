@@ -19,6 +19,13 @@ class BlmediaImportArticle extends SqlBase {
    * {@inheritdoc}
    */
   public function query() {
+    
+    /**
+     *  Build query which wil select all required column from source DB.
+     *  Each column will get mapped to drupal fields.
+     *  
+     * @var \Drupal\Core\Database\Query\SelectInterface $query
+     */
     $query = $this->select('article', 'a')
       ->fields('a',  array('articleID',
         'issueDate',
@@ -40,15 +47,17 @@ class BlmediaImportArticle extends SqlBase {
         'category',
         'email2'));
       $query->condition("a.live", "1", "=");
-      $query->addExpression("concat(keyword1,'|',keyword2,'|',keyword3,'|',keyword4)", "keyword");
+      $query->addExpression("concat(keyword1,'|',keyword2,'|',keyword3,'|',keyword4)", "keyword"); // Handle multiple value field.
       $query->addExpression("concat(link1,'|',link2)", "link");
       $query->addExpression("concat(email1,'|',email2)", "email");
       
-    //$query->leftjoin('keywords', 'k', 'k.articleID = a.articleID');
+      // Do not excute query, just retrun query object.
     return $query;
   }
 
   /**
+   * 
+   * Nothing for migration process here, except  listing fields info  at drush and Migrate UI.
    * {@inheritdoc}
    */
   public function fields() {
@@ -69,7 +78,6 @@ class BlmediaImportArticle extends SqlBase {
       'location' => $this->t("Location term"),
       'email1' => $this->t("Keywords term"),
       'email' => $this->t("Contacts email-1 address for article"));
-    
     return $fields;
   }
 
@@ -83,8 +91,10 @@ class BlmediaImportArticle extends SqlBase {
     $row->setSourceProperty('title', ucfirst($row->getSourceProperty('title')));
     
     /**
-     * Handle NULL images.
-     * @var Ambiguous $image
+     * Handle NULL images. Check if image exist OR valid path is provided.
+     * Set to empty  if not valid image details.
+     * 
+     * @var file $image
      */
     $image = $row->getSourceProperty('image');    
     $wrong_file_flag = count(explode('/', $image));
@@ -95,32 +105,16 @@ class BlmediaImportArticle extends SqlBase {
       $row->setSourceProperty('image', '');  // Set NULL/EMPTY
     }
     
-    
-    // Handle all the term  reference field which may have NULL  as value in source.
-    // Field Location.
-    if (NULL == $row->getSourceProperty('location')){
-      $row->setSourceProperty('location', '');
-    }
-    // Field Category.
-    if (NULL == $row->getSourceProperty('category')){
-      $row->setSourceProperty('category', '');
-    }
-    // Field  Links.
+    // Field  Links, check if empty. 
     if (NULL == $row->getSourceProperty('link1')){
       $row->setSourceProperty('link1', '');
     }
     
-    //  Check & Update 'issueDate' as per D8.
-    $issueDateSource = $row->getSourceProperty('issueDate');
-    if ($issueDateSource && '0000-00-00' != $issueDateSource) {
-      $issueDateFormatted = date("Y-m-d\TH:i:s", strtotime($issueDateSource));
-      $row->setSourceProperty('issueDate', $issueDateFormatted);
+    //Field Category, Check if empty. 
+    if (NULL == $row->getSourceProperty('category')){
+      $row->setSourceProperty('category', FALSE);
     }
-    else {
-      $row->setSourceProperty('issueDate', date("Y-m-d\TH:i:s"));  // Set NULL/EMPTY
-    }
-
-    
+        
     // Node created and updated date.
     $createdDateSource = $row->getSourceProperty('created');
     if ($createdDateSource && '0000-00-00' != $createdDateSource) {
@@ -153,7 +147,11 @@ class BlmediaImportArticle extends SqlBase {
       if (!$keyword_value || 'NULL' == $keyword_value) {
         unset($keywords_array[$keyword_index]);
       }
+      else {
+        $keywords_array[$keyword_index] = ucfirst($keyword_value);
+      }
     }
+    
     $keywords = implode("|", $keywords_array);
     $row->setSourceProperty('keyword', $keywords);
     

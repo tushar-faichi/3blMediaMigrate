@@ -46,8 +46,6 @@ class BlmediaImportCategory extends SqlBase {
     $category_name = str_replace('\'', '', $category_name);
     $category_name = trim($category_name, ' ');
     
-    print_r($category_name . "\r\n");
-    
     $row->setSourceProperty('name', $category_name);
     // Check if term already exist. 
     $term = \Drupal::entityTypeManager()
